@@ -13,9 +13,23 @@ namespace WaterProj.API.Controllers
         public WaterController(WaterDbContext temp) => _WaterContext = temp; // Sets _WaterContext with lambda function
 
         [HttpGet("AllProjects")] // Route to this specific controller. This gets added onto /api/Water/xxx
-        public IEnumerable<Project> GetProjects() // Gets all entries in projects table and returns it
+        // Gets all entries in projects table and returns it
+        public IActionResult GetProjects(int pageSize = 5, int pageNum = 1) // Default to 5
         {
-            return _WaterContext.Projects.ToList();
+            var AllProjects = _WaterContext.Projects
+                .Skip((pageNum-1) * pageSize) // Skips the page size amount until it gets to the page you are on
+                .Take(pageSize) // Only sends how many the user selected
+                .ToList();
+
+            var totalNumProjects = _WaterContext.Projects.Count(); // So react can no how many projects 
+
+            var TotalObject = new 
+                                {
+                                    Projects = AllProjects,
+                                    totalNumProjects
+                                };
+
+            return Ok(TotalObject); // Sends a ok status code
         }
 
         [HttpGet("FunctionalProjects")]

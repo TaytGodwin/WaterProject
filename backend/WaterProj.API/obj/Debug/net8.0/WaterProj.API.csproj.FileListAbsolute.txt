@@ -52,6 +52,7 @@ C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNe
 C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\obj\Debug\net8.0\WaterProj.API.csproj.CoreCompileInputs.cache
 C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\obj\Debug\net8.0\WaterProj.API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\obj\Debug\net8.0\WaterProj.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\obj\Debug\net8.0\WaterProj.API.sourcelink.json
 C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\obj\Debug\net8.0\scopedcss\bundle\WaterProj.API.styles.css
 C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\obj\Debug\net8.0\staticwebassets.development.json
