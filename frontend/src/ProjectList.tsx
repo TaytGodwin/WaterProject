@@ -14,7 +14,10 @@ function ProjectList() {
     const fetchProjects = async () => {
       // gets data
       const response = await fetch(
-        `https://localhost:5000/api/Water/allprojects?pageSize=${pageSize}&pageNum=${pageNum}` // This sends how many objects should be on the page back to the controller
+        `https://localhost:5000/api/Water/allprojects?pageSize=${pageSize}&pageNum=${pageNum}`, // This sends how many objects should be on the page back to the controller
+        {
+          credentials: 'include',
+        }
       );
       const data = await response.json();
       // Set variable

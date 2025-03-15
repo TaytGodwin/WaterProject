@@ -16,6 +16,18 @@ namespace WaterProj.API.Controllers
         // Gets all entries in projects table and returns it
         public IActionResult GetProjects(int pageSize = 5, int pageNum = 1) // Default to 5
         {
+            string? FavProjType = Request.Cookies["FavoriteProjectType"];
+            Console.WriteLine("~~~~~~~~~~~~~~COOKIE~~~~~~~~~~~~~~~\n" + FavProjType);
+
+            // Send a cookie - Each cookie is a key value pair.
+            HttpContext.Response.Cookies.Append("FavoriteProjectType", "Borehole Well and Hand Pump", new CookieOptions
+            {
+                HttpOnly = true, // This means it is only visible to the server and not the DOM (better for security)
+                Secure = true, // Means it will only transmit the cookie of HTTPS (may want to change it during development)
+                SameSite = SameSiteMode.Strict, // Strict says other site cookies are not allowed (good if things need to be secure). May need to relax it during development
+                Expires = DateTime.Now.AddMinutes(4) // How long until cookie expires
+            });
+            
             var AllProjects = _WaterContext.Projects
                 .Skip((pageNum-1) * pageSize) // Skips the page size amount until it gets to the page you are on
                 .Take(pageSize) // Only sends how many the user selected
