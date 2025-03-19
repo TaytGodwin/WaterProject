@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>// Add options to enable cookies
     options.AddPolicy("AllowFrontend", // Policy can be called whatevr you want
         policy =>
         {
-            policy.WithOrigins("http://localhost:3015") // Make sure this is the right port
+            policy.WithOrigins("http://localhost:3016") // Make sure this is the right port
                     .AllowCredentials() //  Cookies are added with this
                     .AllowAnyHeader()
                     .AllowAnyMethod();
