@@ -14,7 +14,7 @@ namespace WaterProj.API.Controllers
 
         [HttpGet("AllProjects")] // Route to this specific controller. This gets added onto /api/Water/xxx
         // Gets all entries in projects table and returns it
-        public IActionResult GetProjects(int pageSize = 5, int pageNum = 1) // Default to 5
+        public IActionResult GetProjects(int pageSize = 5, int pageNum = 1, [FromQuery] List<string>? projectTypes = null)
         {
             string? FavProjType = Request.Cookies["FavoriteProjectType"];
             Console.WriteLine("~~~~~~~~~~~~~~COOKIE~~~~~~~~~~~~~~~\n" + FavProjType);
@@ -27,13 +27,21 @@ namespace WaterProj.API.Controllers
                 SameSite = SameSiteMode.Strict, // Strict says other site cookies are not allowed (good if things need to be secure). May need to relax it during development
                 Expires = DateTime.Now.AddMinutes(4) // How long until cookie expires
             });
-            
-            var AllProjects = _WaterContext.Projects
+
+            // IQueryable are built one thing at a time
+            var query = _WaterContext.Projects.AsQueryable();
+
+            if (projectTypes != null && projectTypes.Any()) // Check if the project type is not null
+            {
+                query = query.Where(p => projectTypes.Contains(p.ProjectType)); // Only gets project types when they are in list
+            }
+
+            var AllProjects = query // Narrowed down, filtered list
                 .Skip((pageNum-1) * pageSize) // Skips the page size amount until it gets to the page you are on
                 .Take(pageSize) // Only sends how many the user selected
                 .ToList();
 
-            var totalNumProjects = _WaterContext.Projects.Count(); // So react can no how many projects 
+            var totalNumProjects = query.Count(); // So react can no how many projects 
 
             var TotalObject = new 
                                 {
@@ -44,11 +52,15 @@ namespace WaterProj.API.Controllers
             return Ok(TotalObject); // Sends a ok status code
         }
 
-        [HttpGet("FunctionalProjects")]
-        public IEnumerable<Project> GetFunctionalProjects()
+        [HttpGet("GetProjectTypes")]
+        public IActionResult GetProjectTypes ()
         {
-            var something = _WaterContext.Projects.Where(p=>p.ProjectFunctionalityStatus == "Functional").ToList();
-            return something;
+            var projectTypes = _WaterContext.Projects
+                .Select(pt => pt.ProjectType)
+                .Distinct()
+                .ToList();
+
+            return Ok(projectTypes);
         }
     }
 }

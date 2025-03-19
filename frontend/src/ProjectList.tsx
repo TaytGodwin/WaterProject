@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Project } from './types/Project';
 
-function ProjectList() {
+function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
   // Store information in an array as it comes from the API
   const [projects, setProjects] = useState<Project[]>([]); // Default empty array, but will recieve an array of type Project
   const [pageSize, setPageSize] = useState<number>(10); // This uses state to remmeber how many items to display on a page
@@ -12,9 +12,14 @@ function ProjectList() {
   // Gets the data when it is necessary
   useEffect(() => {
     const fetchProjects = async () => {
+      // This is used to filter the projects
+      const categoryParams = selectedCategories
+        .map((cat) => `projectTypes=${encodeURIComponent(cat)}`) // encodeURIComponent is used for security
+        .join('&'); // for each category, it formats it and joins it with & in the middle
+
       // gets data
       const response = await fetch(
-        `https://localhost:5000/api/Water/allprojects?pageSize=${pageSize}&pageNum=${pageNum}`, // This sends how many objects should be on the page back to the controller
+        `https://localhost:5000/api/Water/allprojects?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length ? `&${categoryParams}` : ''}`, // This sends checks how many boxes are selected and returns it
         {
           credentials: 'include',
         }
@@ -28,11 +33,10 @@ function ProjectList() {
 
     // Call function
     fetchProjects();
-  }, [pageSize, pageNum, totalItems]); // This array tells react what to look for when to updated
+  }, [pageSize, pageNum, totalItems, selectedCategories]); // This array tells react what to look for when to updated
 
   return (
     <>
-      <h1>Water Projects</h1>
       <br />
       {projects.map((p) => (
         <div id="projectCard" className="card" key={p.projectId}>

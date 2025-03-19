@@ -28,6 +28,16 @@
               "format": "int32",
               "default": 1
             }
+          },
+          {
+            "name": "projectTypes",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         ],
         "responses": {
@@ -37,147 +47,18 @@
         }
       }
     },
-    "/api/Water/FunctionalProjects": {
+    "/api/Water/GetProjectTypes": {
       "get": {
         "tags": [
           "Water"
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Project"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Project"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Project"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/WeatherForecast": {
-      "get": {
-        "tags": [
-          "WeatherForecast"
-        ],
-        "operationId": "GetWeatherForecast",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
     }
   },
-  "components": {
-    "schemas": {
-      "Project": {
-        "required": [
-          "projectName"
-        ],
-        "type": "object",
-        "properties": {
-          "projectId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "projectName": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "projectType": {
-            "type": "string",
-            "nullable": true
-          },
-          "projectRegionalProgram": {
-            "type": "string",
-            "nullable": true
-          },
-          "projectImpact": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "projectPhase": {
-            "type": "string",
-            "nullable": true
-          },
-          "projectFunctionalityStatus": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "WeatherForecast": {
-        "type": "object",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "temperatureC": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "temperatureF": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "summary": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      }
-    }
-  }
+  "components": { }
 }
