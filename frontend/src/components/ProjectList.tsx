@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Project } from './types/Project';
+import { Project } from '../types/Project';
+import { useNavigate } from 'react-router-dom';
 
 function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
   // Store information in an array as it comes from the API
@@ -8,6 +9,7 @@ function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
   const [pageNum, setPageNum] = useState<number>(1); // Default to page one
   const [totalItems, setTotalItems] = useState<number>(0); // Keeps track of how many things are returned
   const [totalPages, setTotalPages] = useState<number>(0); // Number of separate pages you will have
+  const navigate = useNavigate();
 
   // Gets the data when it is necessary
   useEffect(() => {
@@ -62,6 +64,15 @@ function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
                 <strong>Project State:</strong> {p.projectFunctionalityStatus}
               </li>
             </ul>
+
+            <button
+              className="btn btn-success"
+              onClick={() =>
+                navigate(`/donate/${p.projectName}/${p.projectId}`)
+              }
+            >
+              Donate
+            </button>
           </div>
         </div>
       ))}

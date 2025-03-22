@@ -1,36 +1,29 @@
 import './App.css';
-import CategoryFilter from './CategoryFilter';
-import Fingerprint from './Fingerprint';
-import PrivacyPolicy from './PrivacyPolicy';
-import ProjectList from './ProjectList';
-import CookieConsent from 'react-cookie-consent';
-import WelcomeBand from './WelcomeBand';
-import { useState } from 'react';
+import CartSummary from './components/CartSummary';
+import { CartProvider } from './context/CartContext';
+import CartPage from './pages/CartPage';
+import DonatePage from './pages/DonatePage';
+import ProjectsPage from './pages/ProjectsPage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // router enables routing, routes hold defintions, route is a specific route
 
 function App() {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   return (
     <>
-      <div className="container mt-4">
-        <div className="row bg-primary text-white">
-          <WelcomeBand />
-        </div>
-        <div className="row">
-          <div className="col-md-3">
-            <CategoryFilter
-              selectedCategories={selectedCategories} // Pass which categories are selected to this component
-              setSelectedCategories={setSelectedCategories} // Passes the function to set these categories
+      <CartProvider>
+        <Router>
+          <CartSummary />
+          <Routes>
+            <Route path="/" element={<ProjectsPage />} />
+            {/*Default route*/}
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route
+              path="/donate/:projectName/:projectId"
+              element={<DonatePage />}
             />
-          </div>
-          <div className="col-md-9">
-            <ProjectList selectedCategories={selectedCategories} />
-          </div>
-        </div>
-      </div>
-      <CookieConsent>
-        This website uses cookies to enhance the user experience.
-      </CookieConsent>
-      <Fingerprint />
+            <Route path="/cart" element={<CartPage />} />
+          </Routes>
+        </Router>
+      </CartProvider>
     </>
   );
 }
