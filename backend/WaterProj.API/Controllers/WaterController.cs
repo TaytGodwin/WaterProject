@@ -72,7 +72,7 @@ namespace WaterProj.API.Controllers
             return Ok(newProject);
         }
 
-        [HttpPut("UpdatProject/{projectId}")]
+        [HttpPut("UpdateProject/{projectId}")]
         public IActionResult UpdateProject(int projectId, [FromBody] Project updatedProject)
         {
             var existingProject = _WaterContext.Projects.Find(projectId); // Finds the project to edit

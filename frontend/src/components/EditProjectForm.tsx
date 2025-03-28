@@ -1,24 +1,21 @@
 import { useState } from 'react';
 import { Project } from '../types/Project';
-import { addProject } from '../api/ProjectsAPI';
+import { updateProject } from '../api/ProjectsAPI';
 
 // This shows whether the update was successful or not
-interface NewProjectFormProps {
+interface EditProjectFormProps {
+  project: Project; // we recieve a project to edit
   onSuccess: () => void;
   onCancel: () => void;
 }
 
 // This is expecting the interfact above
-const NewProjectForm = ({ onSuccess, onCancel }: NewProjectFormProps) => {
-  const [formData, setFormData] = useState<Project>({
-    projectId: 0,
-    projectName: '',
-    projectType: '',
-    projectRegionalProgram: '',
-    projectImpact: 0,
-    projectPhase: '',
-    projectFunctionalityStatus: '',
-  });
+const EditProjectForm = ({
+  project,
+  onSuccess,
+  onCancel,
+}: EditProjectFormProps) => {
+  const [formData, setFormData] = useState<Project>({ ...project }); // Default is a project with its different attributes
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value }); // Sets equal to whatever is in form data + the input box value
@@ -26,7 +23,7 @@ const NewProjectForm = ({ onSuccess, onCancel }: NewProjectFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Stop the refresh
-    await addProject(formData); // Calls the addProject api call in the API file
+    await updateProject(formData.projectId, formData); // Calls the updateProject api call in the API file
     onSuccess(); // Tells that you got the data
   };
 
@@ -88,7 +85,7 @@ const NewProjectForm = ({ onSuccess, onCancel }: NewProjectFormProps) => {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Add Project</button>
+        <button type="submit">Update Project</button>
         <button type="button" onClick={onCancel}>
           Cancel
         </button>
@@ -97,4 +94,4 @@ const NewProjectForm = ({ onSuccess, onCancel }: NewProjectFormProps) => {
   );
 };
 
-export default NewProjectForm;
+export default EditProjectForm;
