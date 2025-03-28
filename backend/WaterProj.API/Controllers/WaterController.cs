@@ -62,5 +62,49 @@ namespace WaterProj.API.Controllers
 
             return Ok(projectTypes);
         }
+
+        [HttpPost("AddProject")]
+        public IActionResult AddProject([FromBody] Project newProject) // FromBody says it is coming in in the body as json
+        {
+            _WaterContext.Projects.Add(newProject);
+            _WaterContext.SaveChanges();
+
+            return Ok(newProject);
+        }
+
+        [HttpPut("UpdatProject/{projectId}")]
+        public IActionResult UpdateProject(int projectId, [FromBody] Project updatedProject)
+        {
+            var existingProject = _WaterContext.Projects.Find(projectId); // Finds the project to edit
+            // Put in edits
+            existingProject.ProjectName = updatedProject.ProjectName;
+            existingProject.ProjectType = updatedProject.ProjectType;
+            existingProject.ProjectRegionalProgram = updatedProject.ProjectRegionalProgram;
+            existingProject.ProjectImpact = updatedProject.ProjectImpact;
+            existingProject.ProjectPhase = updatedProject.ProjectPhase;
+            existingProject.ProjectFunctionalityStatus = updatedProject.ProjectFunctionalityStatus;
+            
+            // Update database with edits
+            _WaterContext.Projects.Update(existingProject);
+            _WaterContext.SaveChanges();
+
+            return Ok(existingProject);
+        }
+
+        [HttpDelete("DeleteProject/{projectId}")]
+        public IActionResult DeleteProject(int projectId)
+        {
+            var project = _WaterContext.Projects.Find(projectId);
+            // Check for project
+            if (project == null)
+            {
+                return NotFound(new {message = "Project not found"});
+            }
+
+            _WaterContext.Projects.Remove(project);
+            _WaterContext.SaveChanges();
+
+            return NoContent();
+        }
     }
 }

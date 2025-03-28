@@ -1,41 +1,44 @@
 import { useEffect, useState } from 'react';
 import { Project } from '../types/Project';
 import { useNavigate } from 'react-router-dom';
+import { fetchProjects } from '../api/ProjectsAPI';
+import Pagination from './Pagination';
 
 function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
   // Store information in an array as it comes from the API
   const [projects, setProjects] = useState<Project[]>([]); // Default empty array, but will recieve an array of type Project
   const [pageSize, setPageSize] = useState<number>(10); // This uses state to remmeber how many items to display on a page
   const [pageNum, setPageNum] = useState<number>(1); // Default to page one
-  const [totalItems, setTotalItems] = useState<number>(0); // Keeps track of how many things are returned
   const [totalPages, setTotalPages] = useState<number>(0); // Number of separate pages you will have
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   // Gets the data when it is necessary
   useEffect(() => {
-    const fetchProjects = async () => {
-      // This is used to filter the projects
-      const categoryParams = selectedCategories
-        .map((cat) => `projectTypes=${encodeURIComponent(cat)}`) // encodeURIComponent is used for security
-        .join('&'); // for each category, it formats it and joins it with & in the middle
+    const loadProjects = async () => {
+      // Use API call created in other file
+      try {
+        setLoading(true);
+        const data = await fetchProjects(pageSize, pageNum, selectedCategories); // Pass in what is needed for the API call
 
-      // gets data
-      const response = await fetch(
-        `https://localhost:5000/api/Water/allprojects?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length ? `&${categoryParams}` : ''}`, // This sends checks how many boxes are selected and returns it
-        {
-          credentials: 'include',
-        }
-      );
-      const data = await response.json();
-      // Set variable
-      setProjects(data.projects); // Get the projects stuff from the json
-      setTotalItems(data.totalNumProjects); // Get total number
-      setTotalPages(Math.ceil(totalItems / pageSize)); // Will return how many pages based on requested page size
+        // Set variable
+        setProjects(data.projects); // Get the projects stuff from the json
+        setTotalPages(Math.ceil(data.totalNumProjects / pageSize)); // Will return how many pages based on requested page size
+      } catch (error) {
+        setError((error as Error).message);
+      } finally {
+        // This is run even if there is an error
+        setLoading(false);
+      }
     };
 
     // Call function
-    fetchProjects();
-  }, [pageSize, pageNum, totalItems, selectedCategories]); // This array tells react what to look for when to updated
+    loadProjects();
+  }, [pageSize, pageNum, selectedCategories]); // This array tells react what to look for when to updated
+
+  if (loading) return <p>Loading projects...</p>;
+  if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
     <>
@@ -76,53 +79,16 @@ function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
           </div>
         </div>
       ))}
-
-      <button disabled={pageNum === 1} onClick={() => setPageNum(pageNum - 1)}>
-        Previous
-      </button>
-      {/*Subtract 1 from current page number*/}
-      {[...Array(totalPages)].map(
-        (
-          _,
-          index // Array of the total number of pages
-        ) => (
-          // Index starts at 0 and counts on
-          <button
-            key={index + 1}
-            onClick={() => setPageNum(index + 1)}
-            disabled={pageNum === index + 1}
-          >
-            {/* Sets what page you are on */}
-            {index + 1}
-            {/* Shows page number */}
-          </button>
-        )
-      )}
-      <button
-        disabled={pageNum === totalPages}
-        onClick={() => setPageNum(pageNum + 1)}
-      >
-        Next
-      </button>
-      {/*Add 1 to current page number*/}
-
-      <br />
-      <label>
-        Results per page:
-        <select
-          value={pageSize}
-          onChange={(p) => {
-            setPageSize(Number(p.target.value));
-            setPageNum(1); // Sets page number back to 1 when they change
-          }}
-        >
-          {' '}
-          {/* This changes the pageSize variable when the drop down changes */}
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="20">20</option>
-        </select>
-      </label>
+      <Pagination
+        currentPage={pageNum}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        onPageChange={setPageNum}
+        onPageSizeChange={(newSize) => {
+          setPageSize(newSize);
+          setPageNum(1);
+        }}
+      />
     </>
   );
 }

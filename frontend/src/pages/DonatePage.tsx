@@ -8,7 +8,7 @@ function DonatePage() {
   const navigate = useNavigate();
   const { projectName, projectId } = useParams(); // Allows you to get the parameter
   const { addToCart } = useCart(); // useCart is the hook we built in the context file
-  const [donationAmount, setDonationAmount] = useState<number>(0);
+  const [donationAmount, setDonationAmount] = useState<number>(1);
 
   // Function to add things to cart
   const handleAddToCart = () => {
@@ -31,6 +31,7 @@ function DonatePage() {
           type="number"
           placeholder="Enter donation amount"
           value={donationAmount}
+          min="1"
           onChange={(x) => setDonationAmount(Number(x.target.value))} // Set dontation amount when it is changed
         />
         <button onClick={handleAddToCart}>Add to Cart</button>
