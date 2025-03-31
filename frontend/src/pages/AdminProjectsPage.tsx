@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Project } from '../types/Project';
 import { deleteProject, fetchProjects } from '../api/ProjectsAPI';
 import Pagination from '../components/Pagination';
@@ -8,7 +7,6 @@ import EditProjectForm from '../components/EditProjectForm';
 
 const AdminProjectsPage = () => {
   const [projects, setProjects] = useState<Project[]>([]); // Default empty array, but will recieve an array of type Project
-  const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [pageSize, setPageSize] = useState<number>(10); // This uses state to remmeber how many items to display on a page

@@ -1,7 +1,7 @@
 import '../App.css';
 import CategoryFilter from '../components/CategoryFilter';
 import Fingerprint from '../Fingerprint';
-import PrivacyPolicy from '../PrivacyPolicy';
+// import PrivacyPolicy from '../PrivacyPolicy';
 import ProjectList from '../components/ProjectList';
 import CookieConsent from 'react-cookie-consent';
 import WelcomeBand from '../components/WelcomeBand';

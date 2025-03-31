@@ -69,3 +69,10 @@ C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNe
 C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\obj\Debug\net8.0\WaterProj.API.pdb
 C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\obj\Debug\net8.0\WaterProj.API.genruntimeconfig.cache
 C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\obj\Debug\net8.0\ref\WaterProj.API.dll
+C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\bin\Debug\net8.0\WaterProject.sqlite
+C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\bin\Debug\net8.0\publish\web.config
+C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\bin\Debug\net8.0\publish\appsettings.Development.json
+C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\bin\Debug\net8.0\publish\appsettings.json
+C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\bin\Debug\net8.0\publish\WaterProj.API.deps.json
+C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\bin\Debug\net8.0\publish\WaterProj.API.runtimeconfig.json
+C:\Users\tater\OneDrive - Brigham Young University\Classes\Info Sys\IS 413 DotNet\WaterProject\backend\WaterProj.API\bin\Debug\net8.0\publish\WaterProj.API.staticwebassets.endpoints.json
