@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>// Add options to enable cookies
     options.AddPolicy("AllowReactApp", // Policy can be called whatevr you want
         policy =>
         {
-            policy.WithOrigins("http://localhost:3016","https://thankful-coast-074415f1e.6.azurestaticapps.net/") // Make sure this is the right port
+            policy.WithOrigins("http://localhost:3016","https://thankful-coast-074415f1e.6.azurestaticapps.net") // Make sure this is the right port
                     .AllowCredentials() //  Cookies are added with this
                     .AllowAnyHeader()
                     .AllowAnyMethod(); // Lets you do post, delete, get, etc.
@@ -34,9 +34,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("AllowReactApp"); // Add the policy created above
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowReactApp"); // Add the policy created above
+
 
 app.UseAuthorization();
 
