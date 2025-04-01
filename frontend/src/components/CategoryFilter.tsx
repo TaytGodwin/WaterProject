@@ -15,7 +15,7 @@ function CategoryFilter({
       // This gets all category types
       try {
         const response = await fetch(
-          'https://thankful-coast-074415f1e.6.azurestaticapps.net/api/Water/GetProjectTypes'
+          'https://waterprojectbackend.azurewebsites.net/api/Water/GetProjectTypes'
         );
         const data = await response.json();
 
